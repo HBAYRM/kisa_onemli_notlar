@@ -1,0 +1,13 @@
+#KORELASYON İLİŞKİLERİ
+corr_matrix = veriler.corr()
+def en_yuksek_iliskiler(corr_matrix):
+    # Korelasyon matrisini sütunlara göre sıralama
+    sorted_corr = corr_matrix.unstack().sort_values(ascending=False)
+
+    # Sıralanmış korelasyon değerlerinin en yüksek olduğu sütun ikililerini yazdırma
+    for i, (s1, s2) in enumerate(sorted_corr.index):
+        if s1 != s2:  # Aynı sütun ikilisini tekrarlamamak için
+            print(f"{s1}-{s2}: {sorted_corr[i]}")
+
+# Örnek kullanım
+en_yuksek_iliskiler(corr_matrix)

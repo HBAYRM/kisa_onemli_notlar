@@ -1,0 +1,86 @@
+import pandas as pd
+from sklearn import ensemble, gaussian_process, linear_model, naive_bayes, neighbors, svm, tree, discriminant_analysis
+from xgboost import XGBClassifier
+from sklearn.metrics import accuracy_score
+
+
+# Define the list of different machine learning algorithms
+MLA = [
+    # Ensemble Methods
+    ensemble.AdaBoostClassifier(),
+    ensemble.BaggingClassifier(),
+    ensemble.ExtraTreesClassifier(),
+    ensemble.GradientBoostingClassifier(),
+    ensemble.RandomForestClassifier(),
+
+    # Gaussian Processes
+    gaussian_process.GaussianProcessClassifier(),
+
+    # GLM
+    linear_model.LogisticRegressionCV(),
+    linear_model.PassiveAggressiveClassifier(),
+    linear_model.RidgeClassifierCV(),
+    linear_model.SGDClassifier(),
+    linear_model.Perceptron(),
+
+    # Navies Bayes
+    naive_bayes.BernoulliNB(),
+    naive_bayes.GaussianNB(),
+
+    # Nearest Neighbor
+    neighbors.KNeighborsClassifier(),
+
+    # SVM
+    svm.SVC(probability=True),
+    svm.NuSVC(probability=True),
+    svm.LinearSVC(),
+
+    # Trees
+    tree.DecisionTreeClassifier(),
+    tree.ExtraTreeClassifier(),
+
+    # Discriminant Analysis
+    discriminant_analysis.LinearDiscriminantAnalysis(),
+    discriminant_analysis.QuadraticDiscriminantAnalysis(),
+
+    # xgboost: http://xgboost.readthedocs.io/en/latest/model.html
+    XGBClassifier()
+]
+
+# Create empty lists to store the results
+algo_names = []
+train_accuracy_scores = []
+test_accuracy_scores = []
+
+# Iterate over each algorithm in MLA
+for model in MLA:
+    # Fit the model on the training data
+    model.fit(MyX_train, MyY_train)
+
+    # Make predictions on the training data
+    train_y_pred = model.predict(MyX_train)
+
+    # Calculate the accuracy for the training data
+    train_accuracy = accuracy_score(MyY_train, train_y_pred)
+
+    # Make predictions on the testing data
+    test_y_pred = model.predict(MyX_test)
+
+    # Calculate the accuracy for the testing data
+    test_accuracy = accuracy_score(MyY_test, test_y_pred)
+
+    # Store the results in the lists
+    algo_names.append(type(model).__name__)
+    train_accuracy_scores.append(train_accuracy)
+    test_accuracy_scores.append(test_accuracy)
+
+
+# Create a dataframe from the results
+results_df = pd.DataFrame({
+    'Algorithm': algo_names,
+    'Training Accuracy': train_accuracy_scores,
+    'Testing Accuracy': test_accuracy_scores
+
+})
+
+results_df

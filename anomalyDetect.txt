@@ -1,0 +1,6 @@
+from sklearn.ensemble import IsolationForest
+model = IsolationForest()
+model.fit(veriler_temiz)
+veriler_temiz['anomaly']= model.predict(veriler_temiz)
+veriler_temiz.drop(veriler_temiz[veriler_temiz['anomaly']==-1].index,inplace = True)
+veriler_temiz.drop(columns=['anomaly'], inplace=True)

@@ -1,0 +1,61 @@
+import pandas as pd
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import MinMaxScaler
+
+def one_hot_encode(data, columns):
+    # Kategorik sütunları seçme
+    categorical_data = data[columns]
+
+    # One-Hot Encoder oluşturma
+    encoder = OneHotEncoder(sparse=False, drop='first')
+
+    # Kategorik veriyi dönüştürme
+    encoded_data = encoder.fit_transform(categorical_data)
+
+    # One-Hot Encoding sonucunu DataFrame'e dönüştürme
+    encoded_df = pd.DataFrame(encoded_data, columns=encoder.get_feature_names_out(columns))
+
+    # Dönüştürülmüş veriyi orijinal veriyle birleştirme
+    preprocessed_data = pd.concat([data.drop(columns, axis=1), encoded_df], axis=1)
+
+    return preprocessed_data
+
+
+
+
+def min_max_scale(data, column):
+    # Min-Max Scaler oluşturma
+    scaler = MinMaxScaler()
+
+    # Sütunu seçme ve ölçeklendirme
+    scaled_column = scaler.fit_transform(data[[column]])
+
+    # Ölçeklendirilmiş sütunu yeni bir DataFrame'e dönüştürme
+    scaled_data = pd.DataFrame(scaled_column, columns=[column])
+
+    # Ölçeklendirilmiş sütunu orijinal veri setine ekleme
+    data[column] = scaled_data[column]
+
+    return data
+
+
+def fill_nan_with_mean(data):
+    for column in data.columns:
+        if data[column].isnull().any():
+            mean = data[column].mean()
+            data[column].fillna(mean, inplace=True)
+    return data
+def fill_nan_with_most_common(data, column):
+    if data[column].isnull().any():
+        most_common_value = data[column].mode()[0]
+        data[column].fillna(most_common_value, inplace=True)
+    return data
+
+def veriOnIsleme(data, columnsForOneHotEncoder, columnsForMinMaxScaler):
+    for column in columnsForOneHotEncoder:
+        data = fill_nan_with_most_common(data, column)  # Kategorik sütunları en sık geçen değerle doldur
+    data = fill_nan_with_mean(data)  # Sayısal sütunları ortalama ile doldur
+    dataForOneHot = one_hot_encode(data, columnsForOneHotEncoder)
+    for column in columnsForMinMaxScaler:
+        dataForOneHot = min_max_scale(dataForOneHot, column)
+    return dataForOneHot

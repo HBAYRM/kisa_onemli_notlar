@@ -1,0 +1,7 @@
+# Sütun isimlerini ve veri tiplerini alma
+column_names = veriler.columns.tolist()  # Sütun isimleri
+column_types = veriler.dtypes.tolist()   # Sütun veri tipleri
+
+
+categorical_columns = [column_names[i] for i in range(len(column_names)) if 'object' in str(column_types[i])]
+numeric_columns = [column_names[i] for i in range(len(column_names)) if 'int' in str(column_types[i]) or 'float' in str(column_types[i])]

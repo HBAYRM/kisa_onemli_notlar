@@ -1,0 +1,7 @@
+plt.figure(figsize = (25,8))
+u = sns.boxplot(palette = 'cool', data=veriler)
+u.set_xticklabels(u.get_xticklabels(),rotation=45)
+
+
+
+veriler.plot(kind="box", subplots=True, layout=(7,4), figsize=(15,14));

@@ -1,0 +1,35 @@
+from google.colab import files
+
+# Kaggle API anahtarlarınızın bulunduğu JSON dosyasını seçin
+files.upload()
+
+
+---------------------------------
+
+import shutil
+
+# Yüklenen JSON dosyasını ~/.kaggle/ klasörüne taşı
+shutil.move('/content/kaggle.json', '/root/.kaggle/kaggle.json')
+
+
+
+-------------------------------------------
+
+
+import os
+import zipfile
+import pandas as pd
+
+# Veriyi indir
+os.system('kaggle competitions download -c spaceship-titanic')
+
+# ZIP dosyasını çıkar
+with zipfile.ZipFile('/content/spaceship-titanic.zip', 'r') as zip_ref:
+    zip_ref.extractall()
+
+# CSV dosyasını DataFrame'e yükle
+csv_filename = 'train.csv'
+dataset = pd.read_csv(csv_filename)
+
+# İlk birkaç satırı görüntüle
+print(dataset.head())

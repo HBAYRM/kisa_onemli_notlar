@@ -1,0 +1,1 @@
+train_encoded["Cinsiyet"] =train_encoded["Cinsiyet"].replace(["Erkek"],1)

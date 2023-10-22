@@ -1,0 +1,5 @@
+# "sütun_adı" sütununda kaç farklı eleman olduğunu bulun
+farkli_eleman_sayisi = veriSetim["species"].nunique()
+
+# Sonucu yazdırın
+print("Sütunda", farkli_eleman_sayisi, "farklı eleman bulunmaktadır.")

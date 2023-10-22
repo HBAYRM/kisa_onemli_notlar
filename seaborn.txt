@@ -1,0 +1,73 @@
+import seaborn as sns
+#to visualize the distribution of data points for each category and their variation with the target feature
+features_=['HomePlanet','CryoSleep','Destination','VIP',"cabin"] #MyX
+for feature in features_:
+    fig,ax=plt.subplots(nrows=1,ncols=2,figsize=(16,6))
+    ax.flatten()
+    
+    ax[0].pie(
+        dataset[feature].value_counts(),
+        shadow=True,
+        autopct='%1.f%%',
+        textprops={'size': 10, 'color': 'white'},
+        colors=sns.color_palette('magma', len(dataset[feature].unique()))
+    )
+    sns.countplot(
+        data=dataset, 
+        y=feature, 
+        ax=ax[1], 
+        palette='magma',
+        hue='Transported' #MyY
+    )
+    fig.suptitle(f'Distribution of {feature} ', fontsize=18, fontweight='bold')
+
+
+#-------------------------
+#-------------------------
+#-------------------------
+#BoxPlot (Aykırı Değerler)
+
+#to visualize outliers of 
+n_row=3
+n_col=2
+features_=['Age',
+ 'RoomService',
+ 'FoodCourt',
+ 'ShoppingMall',
+ 'Spa',
+ 'VRDeck']
+fig,ax=plt.subplots(nrows=3,ncols=2,figsize=(14,5*n_row))
+i=0  #for row number
+for feature in features_:
+    n=i//n_col   #for row no.
+    m=i%n_col    #for col no.
+    sns.boxplot(x=feature,data=dataset,palette='colorblind',ax=ax[n,m])
+    i+=1
+
+
+
+
+
+
+#-------------------------
+#-------------------------
+#-------------------------
+
+
+
+#to visualize the distribution of the numerical features w.r.t target variable
+n_row=3
+n_col=2
+features_=['Age',
+ 'RoomService',
+ 'FoodCourt',
+ 'ShoppingMall',
+ 'Spa',
+ 'VRDeck']
+fig,ax=plt.subplots(nrows=3,ncols=2,figsize=(14,5*n_row))
+i=0  #for row number
+for feature in features_:
+    n=i//n_col   #for row no.
+    m=i%n_col    #for col no.
+    sns.kdeplot(x=feature,data=dataset,palette='magma',ax=ax[n,m],hue='Transported',fill=True)
+    i+=1

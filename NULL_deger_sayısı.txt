@@ -1,0 +1,6 @@
+# Her sütundaki null değer sayısını hesaplayın
+null_deger_sayisi = veriler.isnull().sum()
+
+# Null değer sayılarını yazdırın
+print("Her sütundaki null değer sayıları:")
+print(null_deger_sayisi)

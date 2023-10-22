@@ -1,0 +1,5 @@
+#BURADA Y DEĞERLERİ YES/NO ŞEKLİNDE OLDUĞU İÇİN 1/0  yada 0-1-2 ŞEKLİNE ÇEVİRDİM
+from sklearn.preprocessing import LabelEncoder
+# Encode target variable
+le = LabelEncoder()
+MyY = le.fit_transform(MyY)
